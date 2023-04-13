@@ -1,25 +1,19 @@
 package com.study.chat.service;
 
 import com.study.chat.dto.ChatRoom;
+import com.study.chat.repository.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.event.EventPublishingRunListener;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.*;
 
 @RequiredArgsConstructor
 @Service
 public class ChatService {
-    private Map<String, ChatRoom> chatRooms;
-
-    @PostConstruct //의존성 주입 후 초기화할 때 사용
-    private void init(){
-        chatRooms = new LinkedHashMap<>();
-    }
+    private final ChatRoomRepository chatRoomRepository;
 
     //채팅방 불러오기
-    public List<ChatRoom> findAllRoom(){
+    public List<ChatRoom> findAllRooms(){
         //채팅방 최근 생성순으로 반환
         List<ChatRoom> result = new ArrayList<>(chatRooms.values());
         Collections.reverse(result);
@@ -28,14 +22,15 @@ public class ChatService {
     }
 
     //채팅방 하나 불러오기
-    public ChatRoom findById(String roomId){
-        return chatRooms.get(roomId);
+    public ChatRoom findById(String room_id){
+        return chatRooms.get(room_id);
     }
 
     //채팅방 생성
-    public ChatRoom createRoom(String name){
-        ChatRoom chatRoom = ChatRoom.create(name);
-        chatRooms.put(chatRoom.getRoomId(), chatRoom);
+    public ChatRoom createRoom(String room_name){
+        ChatRoom chatRoom = ChatRoom.create(room_name);
+        chatRooms.put(chatRoom.getRoom_id(), chatRoom);
+
         return chatRoom;
     }
 

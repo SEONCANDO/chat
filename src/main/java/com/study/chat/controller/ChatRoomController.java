@@ -18,14 +18,14 @@ public class ChatRoomController {
     //채팅 리스트 화면
     @GetMapping("/room")
     public String rooms(Model model){
-        return "/chat/room";
+        return "/view/room";
     }
 
     //모든 채팅방 목록 조회
     @GetMapping("/rooms")
     @ResponseBody
     public List<ChatRoom> room(){
-        return chatService.findAllRoom();
+        return chatService.findAllRooms();
     }
 
     //채팅방 개설
@@ -34,16 +34,18 @@ public class ChatRoomController {
     public ChatRoom createRoom(@RequestParam String name){
         return chatService.createRoom(name);
     }
+
     //채팅방 입장 화면
-    @GetMapping("/room/enter/{roomId}")
-    public String roomDetail(Model model, @PathVariable String roomId){
-        model.addAttribute("roomId", roomId);
-        return "/chat/roomdetail";
+    @GetMapping("/room/enter/{room_id}")
+    public String roomDetail(Model model, @PathVariable String room_id){
+        model.addAttribute("room_id", room_id);
+        return "/view/room";
     }
+
     //특정 채팅방 조회
-    @GetMapping("/room/{roomId}")
+    @GetMapping("/room/{room_id}")
     @ResponseBody
-    public ChatRoom roomInfo(@PathVariable String roomId){
-        return chatService.findById(roomId);
+    public ChatRoom roomInfo(@PathVariable String room_id){
+        return chatService.findById(room_id);
     }
 }
